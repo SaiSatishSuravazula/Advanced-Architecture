@@ -1,0 +1,9 @@
+Processing trace...
+Processed 1000 trace records.
+Micro-ops: 1000
+Macro-ops: 754
+Load&Store: 340
+Branch Taken: 73
+Branch NotTaken: 84
+Unconditional Jump: 36
+ALU: 467
