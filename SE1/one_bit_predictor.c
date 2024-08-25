@@ -29,6 +29,7 @@ void simulate(FILE* branchFile)
 
     printf("False predictions: %d\n", False_pred);
     printf("True predictions: %d\n", True_pred);
+    printf("Accuracy: %f percentage\n", ((float) True_pred/(True_pred + False_pred))*100);
 }
 
 int main(int argc, char *argv[])

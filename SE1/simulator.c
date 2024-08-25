@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <strings.h>
 
-void simulate(FILE* inputFile, FILE* outputFile, FILE* branchFile)
+void simulate(FILE* inputFile, FILE* outputFile, FILE* branchFile, FILE* branchInstFile)
 {
   // See the documentation to understand what these variables mean.
   int32_t microOpCount;
@@ -94,6 +94,7 @@ void simulate(FILE* inputFile, FILE* outputFile, FILE* branchFile)
             if(conditionRegister == 'R'){
               branch_taken_count++;
               fprintf(branchFile, "T");
+              fprintf(branchInstFile, "%" PRIi64 "  %" PRIi64 " T\n", instructionAddress, targetAddressTakenBranch);
             }
             else
               uncon_jump_count++;
@@ -102,6 +103,7 @@ void simulate(FILE* inputFile, FILE* outputFile, FILE* branchFile)
             case 'N':
               branch_nt_count++;
               fprintf(branchFile, "N");
+              fprintf(branchInstFile, "%" PRIi64 "  %" PRIi64 " N\n", instructionAddress, targetAddressTakenBranch);
               break;
 
             default:
@@ -131,6 +133,7 @@ int main(int argc, char *argv[])
   FILE *inputFile = stdin;
   FILE *outputFile = stdout;
   FILE *branchFile = stdout;
+  FILE *branchInstFile = stdout;
   
   if (argc >= 2) {
     inputFile = fopen(argv[1], "r");
@@ -142,8 +145,11 @@ int main(int argc, char *argv[])
 
     branchFile = fopen(argv[3], "w");
     assert(branchFile != NULL);
+
+    branchInstFile = fopen(argv[4], "w");
+    assert(branchInstFile != NULL);
   }
   
-  simulate(inputFile, outputFile, branchFile);
+  simulate(inputFile, outputFile, branchFile, branchInstFile);
   return 0;
 }
